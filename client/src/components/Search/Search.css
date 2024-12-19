@@ -1,0 +1,11 @@
+select {
+    width: 8rem;
+}
+
+/* input::placeholder {
+    text-align: start;
+} */
+
+input {
+    text-align: center;
+}
