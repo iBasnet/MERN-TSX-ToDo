@@ -140,11 +140,7 @@ export const GlobalContext = createContext<GlobalContextType>({
     dispatch: () => { }, // no-operation default function
 });
 
-interface GlobalContextProviderProps {
-    children: ReactNode;
-}
-
-export const GlobalContextProvider: React.FC<GlobalContextProviderProps> = ({ children }) => {
+export const GlobalContextProvider = ({ children }: { children: ReactNode }): JSX.Element => {
 
     const [state, dispatch] = useReducer(reducer, initialState);
 

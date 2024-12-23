@@ -16,20 +16,32 @@ mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
     .then(() => console.log('MongoDB connected'))
     .catch((error) => console.error('MongoDB connection error:', error));
 
-// Document Schema and Model
-const documentSchema = new mongoose.Schema({
+// ToDo Schema and Model
+const toDoSchema = new mongoose.Schema({
+    id: {
+        type: Number,
+        required: true
+    },
+    sentAt: {
+        type: Date,
+        required: true,
+    },
+    text: {
+        type: string,
+        required: true,
+    },
     value: {
         type: String,
         required: true
     }
 }, { timestamps: true });
 
-const Document = mongoose.model('Document', documentSchema);
+const Document = mongoose.model('ToDo', toDoSchema);
 
 // Routes
 
 // Fetch all documents
-app.get('/api/db', async (req, res) => {
+app.get('/api/todo', async (req, res) => {
     try {
         const documents = await Document.find();
         res.status(200).json(documents);
@@ -39,7 +51,7 @@ app.get('/api/db', async (req, res) => {
 });
 
 // Create new document
-app.post('/api/db', async (req, res) => {
+app.post('/api/todo', async (req, res) => {
     try {
         const { value } = req.body;
         const newDocument = new Document({ value });
