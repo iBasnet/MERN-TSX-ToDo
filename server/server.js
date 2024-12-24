@@ -27,13 +27,18 @@ const toDoSchema = new mongoose.Schema({
         required: true,
     },
     text: {
-        type: string,
+        type: String,
         required: true,
     },
-    value: {
+    priority: {
         type: String,
-        required: true
-    }
+        required: true,
+        enum: ["Low", "Medium", "High"],
+    },
+    isComplete: {
+        type: Boolean,
+        required: true,
+    },
 }, { timestamps: true });
 
 const Document = mongoose.model('ToDo', toDoSchema);
@@ -43,35 +48,59 @@ const Document = mongoose.model('ToDo', toDoSchema);
 // Fetch all documents
 app.get('/api/todo', async (req, res) => {
     try {
-        const documents = await Document.find();
+        // const documents = await Document.find();
+        const documents = await Document.find({});
         res.status(200).json(documents);
     } catch (error) {
         res.status(500).json({ error: 'Failed to fetch documents' });
     }
-});
+})
 
 // Create new document
 app.post('/api/todo', async (req, res) => {
     try {
-        const { value } = req.body;
-        const newDocument = new Document({ value });
+        const newDocument = new Document(req.body);
         await newDocument.save();
         res.status(201).json(newDocument);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to submit document' });
+        res.status(500).json({ message: 'Failed to add document', error });
     }
-});
+})
 
-// Delete document by ID
-app.delete('/api/db/:id', async (req, res) => {
+// delete document by custom ID
+app.delete('/api/todo/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        await Document.findByIdAndDelete(id);
+        await Document.findOneAndDelete({ id: id });
         res.status(200).json({ message: 'Document deleted successfully' });
     } catch (error) {
-        res.status(500).json({ error: 'Failed to delete the document' });
+        res.status(500).json({ message: 'Failed to delete the document', error });
     }
-});
+})
+
+// Update document by custom ID
+app.put('/api/todo/:id', async (req, res) => {
+
+    const { id } = req.params;
+    const { text, priority } = req.body;
+
+    try {
+        const updatedDocument = await Document.findOneAndUpdate(
+            { id: id }, // or simply { id }
+            { text, priority },
+            { new: true } // Returns the updated document
+        )
+
+        if (!updatedDocument) {
+            return res.status(404).json({ message: 'Task not found' });
+        }
+
+        res.status(200).json(updatedDocument);
+    } catch (error) {
+        res.status(500).json({ message: 'Failed to update the task', error });
+    }
+})
+
 
 // Start Server
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

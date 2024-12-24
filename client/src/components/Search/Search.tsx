@@ -3,12 +3,13 @@ import './Search.css';
 import { GlobalContext } from '../../context/GlobalContext';
 
 type Priority = "Low" | "Medium" | "High";
+const apiTodoEndpoint = 'http://localhost:5172/api/todo';
 
 export default function Search() {
 
     const { state, dispatch } = useContext(GlobalContext);
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         if (!state.editMode.status) {
@@ -19,16 +20,79 @@ export default function Search() {
                 priority: state.priority,
                 isComplete: false,
             }
+            console.log('JavaScript Object')
+            console.log(newTask)
 
-            dispatch({ type: 'ADD_TASK', payload: newTask })
-            dispatch({ type: 'SET_TEXT', payload: '' })
+            try {
+                const response = await fetch(apiTodoEndpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(newTask)
+                })
+
+                console.log('JS Object Notation')
+                console.log(JSON.stringify(newTask))
+
+                if (!response.ok) {
+                    console.error('Response not ok')
+                    throw new Error('Failed to add new task')
+                }
+
+                const data = await response.json() // json is parsed by middleware
+
+                if (data) {
+                    data.sentAt = new Date(data.sentAt);
+                } else {
+                    console.error('sentAt is not available or not in a valid format');
+                }
+
+                console.log('Requested JavaScript Object')
+                console.log(data)
+
+                dispatch({ type: 'ADD_TASK', payload: data })
+                dispatch({ type: 'SET_TEXT', payload: '' })
+            }
+            catch (error) {
+                console.error('Error caught adding new task', error)
+            }
         }
 
         if (state.editMode.status) {
 
-            dispatch({ type: 'UPDATE_TASK', payload: { id: state.editMode.id, updates: { text: state.text, priority: state.priority } } })
-            state.editMode.status = false
-            state.text = ''
+            try {
+                const response = await fetch(`${apiTodoEndpoint}/${state.editMode.id}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text: state.text.trim(), // remove white spaces
+                        priority: state.priority
+                    })
+                })
+
+                if (!response.ok) {
+                    throw new Error('Failed to update task on the server');
+                }
+
+                const updatedTask = await response.json();
+
+                if (updatedTask) {
+                    updatedTask.sentAt = new Date(updatedTask.sentAt);
+                }
+
+                dispatch({
+                    type: 'UPDATE_TASK',
+                    payload: { id: state.editMode.id, updates: updatedTask }
+                })
+                state.editMode.status = false
+                state.text = ''
+
+            } catch (error) {
+                console.error('Error updating task:', error);
+            }
         }
     }
 
