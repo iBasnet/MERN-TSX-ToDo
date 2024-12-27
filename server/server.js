@@ -12,10 +12,13 @@ const MONGO_URI = process.env.MONGO_URI;
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
 
+// Serve static files from the 'dist' folder
 app.use(express.static(path.join(__dirname, 'dist')));
+
+// Redirect all requests to 'index.html' for React routing
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist/index.html'));
-})
+    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+});
 
 // Mongoose Connection
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

@@ -24,10 +24,10 @@ dist-ssr
 *.sw?
 
 # Ignore node_modules and .env in both client and server
-frontend/node_modules/
-frontend/.env
-backend/node_modules/
-backend/.env
+client/node_modules/
+client/.env
+server/node_modules/
+server/.env
 
 # Global ignores
 */node_modules/
