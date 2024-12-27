@@ -3,7 +3,7 @@ import './Search.css';
 import { GlobalContext } from '../../context/GlobalContext';
 
 type Priority = "Low" | "Medium" | "High";
-const apiTodoEndpoint = 'http://localhost:5172/api/todo';
+const apiTodoEndpoint = import.meta.env.VITE_API_TODO_ENDPOINT as string;
 
 export default function Search() {
 

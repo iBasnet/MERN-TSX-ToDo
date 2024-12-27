@@ -5,7 +5,7 @@ import { GlobalContext } from './context/GlobalContext';
 import Header from './layouts/Header';
 import Main from './layouts/Main';
 
-const apiTodoEndpoint = 'http://localhost:5172/api/todo';
+const apiTodoEndpoint = import.meta.env.VITE_API_TODO_ENDPOINT as string;
 
 export default function App() {
 
