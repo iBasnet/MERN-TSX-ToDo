@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -10,6 +11,11 @@ const MONGO_URI = process.env.MONGO_URI;
 // Middleware
 app.use(cors({ origin: 'http://localhost:5173' }));
 app.use(express.json());
+
+app.use(express.static(path.join(__dirname, 'dist')));
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'dist/index.html'));
+})
 
 // Mongoose Connection
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })

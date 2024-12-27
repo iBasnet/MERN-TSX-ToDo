@@ -30,5 +30,5 @@ server/node_modules/
 server/.env
 
 # Global ignores
-node_modules/
-.env
+*/node_modules/
+*/.env
