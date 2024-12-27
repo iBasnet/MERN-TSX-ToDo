@@ -9,7 +9,7 @@ const PORT = process.env.PORT;
 const MONGO_URI = process.env.MONGO_URI;
 
 // Middleware
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors());
 app.use(express.json());
 
 // Serve static files from the 'dist' folder
