@@ -1,10 +1,9 @@
 import { useContext, useEffect } from 'react'
-import Search from './components/Search/Search';
-import Filter from './components/Filter/Filter';
-import Display from './components/Display/Display';
 import Footer from './layouts/Footer';
 import './index.css'
 import { GlobalContext } from './context/GlobalContext';
+import Header from './layouts/Header';
+import Main from './layouts/Main';
 
 const apiTodoEndpoint = 'http://localhost:5172/api/todo';
 
@@ -43,9 +42,8 @@ export default function App() {
 
   return (
     <div className="App">
-      <Search />
-      <Filter />
-      <Display />
+      <Header />
+      <Main />
       <Footer />
     </div>
   )

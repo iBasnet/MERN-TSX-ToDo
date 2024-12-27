@@ -68,17 +68,15 @@ export default function Display() {
                                             <p className='text'>{task.text}</p>
                                             <p className='time'>{task.sentAt.toLocaleTimeString().toUpperCase()} • {task.sentAt.toLocaleDateString()}</p>
                                             <p>Priority: {task.priority} ¬ Status: {task.isComplete ? 'Completed' : 'Pending'}</p>
-                                            <p>{task.id}</p>
+                                            {/* <p>{task.id}</p> */}
                                         </div>
                                         <div className="right">
                                             <BiSolidEdit className='icon__edit'
                                                 onClick={() => handleEdit(task.id)}
                                             />
-                                            <label className='checkbox__complete'>
-                                                <input type="checkbox" name="valid" aria-invalid="false" checked={task.isComplete}
-                                                    onChange={() => (dispatch({ type: 'TOGGLE_COMPLETE', payload: { id: task.id } }))}
-                                                />
-                                            </label>
+                                            <input type="checkbox" name="valid" aria-invalid="false" checked={task.isComplete}
+                                                onChange={() => (dispatch({ type: 'TOGGLE_COMPLETE', payload: { id: task.id } }))}
+                                            />
                                             <FaTrashCan className='icon__trash'
                                                 onClick={() => handleTrash(task.id)}
                                             />

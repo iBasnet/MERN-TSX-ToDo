@@ -1,6 +1,8 @@
 
 export default function Footer() {
     return (
-        <p className="footer">~ BASNET ~</p>
+        <footer>
+            <p>~ BASNET ~</p>
+        </footer>
     )
 }
