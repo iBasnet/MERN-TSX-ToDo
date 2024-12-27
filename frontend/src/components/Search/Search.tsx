@@ -61,7 +61,7 @@ export default function Search() {
         if (state.editMode.status) {
 
             try {
-                const response = await fetch(`${apiTodoEndpoint}/${state.editMode.id}`, {
+                const response = await fetch(`${import.meta.env.VITE_TODO_API_ENDPOINT}/${state.editMode.id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'
