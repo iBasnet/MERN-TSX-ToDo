@@ -3,6 +3,7 @@ import './Search.css';
 import { GlobalContext } from '../../context/GlobalContext';
 
 type Priority = "Low" | "Medium" | "High";
+const apiToDoEndpoint: string = 'http://localhost:5172/api/todo';
 
 export default function Search() {
 
@@ -23,7 +24,7 @@ export default function Search() {
             console.log(newTask)
 
             try {
-                const response = await fetch(import.meta.env.VITE_TODO_API_ENDPOINT, {
+                const response = await fetch(apiToDoEndpoint, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
@@ -61,7 +62,7 @@ export default function Search() {
         if (state.editMode.status) {
 
             try {
-                const response = await fetch(`${import.meta.env.VITE_TODO_API_ENDPOINT}/${state.editMode.id}`, {
+                const response = await fetch(`${apiToDoEndpoint}/${state.editMode.id}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json'

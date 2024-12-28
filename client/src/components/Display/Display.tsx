@@ -5,8 +5,7 @@ import { useContext } from "react";
 import { GlobalContext } from "../../context/GlobalContext";
 
 type Priority = "Low" | "Medium" | "High";
-const apiTodoEndpoint = import.meta.env.VITE_API_TODO_ENDPOINT as string;
-
+const apiToDoEndpoint: string = 'http://localhost:5172/api/todo';
 
 export default function Display() {
 
@@ -38,7 +37,7 @@ export default function Display() {
     const handleTrash = async (id: number) => {
 
         try {
-            const response = await fetch(`${apiTodoEndpoint}/${id}`, {
+            const response = await fetch(`${apiToDoEndpoint}/${id}`, {
                 method: 'DELETE',
             })
 

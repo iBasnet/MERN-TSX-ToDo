@@ -5,6 +5,8 @@ import { GlobalContext } from './context/GlobalContext';
 import Header from './layouts/Header';
 import Main from './layouts/Main';
 
+const apiToDoEndpoint: string = 'http://localhost:5172/api/todo';
+
 export default function App() {
 
   const { dispatch } = useContext(GlobalContext)
@@ -12,7 +14,7 @@ export default function App() {
   async function getTodos() {
 
     try {
-      const response = await fetch(import.meta.env.VITE_TODO_API_ENDPOINT)
+      const response = await fetch(apiToDoEndpoint)
 
       if (!response.ok) {
         console.error('Response not ok')
