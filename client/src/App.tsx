@@ -5,7 +5,7 @@ import { GlobalContext } from './context/GlobalContext';
 import Header from './layouts/Header';
 import Main from './layouts/Main';
 
-const apiToDoEndpoint: string = 'http://localhost:5172/api/todo';
+const apiToDoEndpoint: string = 'https://todo-tsx.onrender.com/api/todo';
 
 export default function App() {
 

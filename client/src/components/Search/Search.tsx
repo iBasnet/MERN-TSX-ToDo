@@ -3,7 +3,7 @@ import './Search.css';
 import { GlobalContext } from '../../context/GlobalContext';
 
 type Priority = "Low" | "Medium" | "High";
-const apiToDoEndpoint: string = 'http://localhost:5172/api/todo';
+const apiToDoEndpoint: string = 'https://todo-tsx.onrender.com/api/todo';
 
 export default function Search() {
 
