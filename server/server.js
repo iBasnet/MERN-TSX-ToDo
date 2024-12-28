@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 require('dotenv').config();
-const path = require('path');
+// const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT;
@@ -12,13 +12,13 @@ const MONGO_URI = process.env.MONGO_URI;
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from the 'dist' folder
-app.use(express.static(path.join(__dirname, 'dist')));
+// // Serve static files from the 'dist' folder
+// app.use(express.static(path.join(__dirname, 'dist')));
 
-// Redirect all requests to 'index.html' for React routing
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'dist', 'index.html'));
-});
+// // Redirect all requests to 'index.html' for React routing
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, 'dist', 'index.html'));
+// });
 
 // Mongoose Connection
 mongoose.connect(MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
