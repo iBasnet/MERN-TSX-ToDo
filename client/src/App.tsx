@@ -21,7 +21,7 @@ export default function App() {
       }
 
       const data = await response.json()
-      // console.log(data)
+      console.log(data)
 
       if (Array.isArray(data)) {
         data.forEach(datum => datum.sentAt = new Date(datum.sentAt))
