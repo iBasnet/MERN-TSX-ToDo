@@ -61,7 +61,7 @@ app.get('/api/todo', async (req, res) => {
         const documents = await Document.find({});
         res.status(200).json(documents);
     } catch (error) {
-        res.status(500).json({ error: 'Failed to fetch documents' });
+        res.status(500).json({ message: 'Failed to fetch documents', error: error });
     }
 })
 
